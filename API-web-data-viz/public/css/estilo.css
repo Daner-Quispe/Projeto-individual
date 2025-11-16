@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Italianno');
 
 body {
   margin: 0;
@@ -22,19 +23,21 @@ body {
 }
 
 .header {
+  background-color: #1D2916;
   height: var(--tamanho-header);
-  border-bottom: 2px solid #32b9cd;
+  
 }
 
 .header .container {
   justify-content: space-between;
-  align-items: center;
   height: 100%;
 }
 
 .header a {
   text-decoration: none;
-  color: #e3b062;
+  color: #ffffff;
+  text-decoration:wavy ;
+  
 }
 
 .agora {
@@ -47,13 +50,16 @@ body {
   align-items: center;
   justify-content: space-between;
   list-style: none;
-  color: #e3b062;
+  color: #ffffff;
 }
 
 .titulo {
-  color: #32b9cd;
+  display: flex;
+  align-items: end;
+  color: #ffffff;
   width: fit-content;
   font-weight: 500;
+  font-family: 'Italianno';
 }
 
 .header h1 {
@@ -64,26 +70,30 @@ body {
 
 .banner {
   height: var(--tamanho-banner);
-  color: white;
-  background-image: url('../assets/imgs/bg-jelly-fish-para-home.png');
+  color: rgb(0, 0, 0);
+  background-image: url('../assets/imgs/rua-com-edificios.jpg');
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
 }
 
-.banner .container {
-  justify-content: center;
+.texto {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 36px;
+  width: 50%;
+}
+
+.texto p {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.container2 {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   height: 100%;
-}
-
-.banner .container p {
-  width: 50%;
-  margin: 0;
-  padding: 0;
-  font-size: 36px;
-}
-
-.banner .container span {
-  font-weight: 800;
 }
 
 /* MISSÃO VISÃO VALORES */
@@ -121,7 +131,7 @@ body {
 /* FOOTER */
 
 .footer {
-  background-color: #32b9cd;
+  background-color: #1D2916;
   height: 150px;
   color: #fff;
   display: flex;
@@ -141,8 +151,9 @@ body {
 
 .login {
   height: var(--tamanho-login);
-  background-image: url('../assets/imgs/bg-jelly-fish-para-home.png');
+  background-image: url('../assets/imgs/vista-de-uma-rua.jpg');
   background-size: cover;
+  background-position:center;
 }
 
 .login .container {
@@ -153,12 +164,13 @@ body {
 
 .card {
   width: 50%;
-  background-color: #e5e5e5;
+  background-color: #827a7a81;
   border-radius: 10px;
+  border: 3px solid #4d1802 ;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  color: palevioletred;
+  color:#ffffff;
   flex-direction: column;
   height: fit-content;
   padding: 20px 0;
@@ -183,7 +195,7 @@ body {
 }
 
 .formulario input {
-  border: 2px solid #32b9cd;
+  border: 2px solid #4d1802;
   text-align: center;
   border-radius: 10px;
   margin: 0;
@@ -214,7 +226,7 @@ body {
   font-weight: 600;
   font-size: 18px;
   color: #fff;
-  background-color: #ED145B;
+  background-color: #4d1802;
   width: 120px;
   height: 30px;
   align-self: center;
@@ -249,7 +261,7 @@ body {
   width: 230px;
   position: fixed;
   border-radius: 4px;
-  border: #ED145B 3px solid;
+  border: #4d1802 3px solid;
   padding: 10px;
   margin-right: 10%;
 }
