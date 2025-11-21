@@ -63,13 +63,17 @@
             <!--<div id="alerta">
             </div>-->
             <div class="postagem">
-                <p><input id="iptFotob" placeholder="Escreva algo..."> <button onclick="foto()">Selecionar</button></p>
+                <div class="miniPerfil"><img src="../assets/imgs/pessoa3.png"></div>
+                    <p>
+                        <input name="foto" id="iptFoto" type="file" />
+                        <input name="descricao" id="iptDescricao" placeholder="Escreva algo...">
+                        <button onclick="enviar()">Enviar</button>
+                    </p>
+                
             </div>
             <div class="area-parametros-alerta">
-                
-                <p>Foto numero 1</p>
-                <p>Foto numero 2</p>
-                <p>Foto numero 3</p>
+                <div id="container">
+                </div>
                 <!--<p class="titulo-legenda">
                     Legenda - Parâmetros para Alertas
                 </p>
@@ -109,7 +113,82 @@
 
 <script>
 
-    function exibirAquarios() {
+    b_usuario.innerHTML = sessionStorage.NICKNAME_USUARIO;
+
+    function enviar() {
+    const formData = new FormData();
+    formData.append('foto', foto.files[0])
+    formData.append('descricao', descricao.value)
+
+    fetch("/usuarios/cadastro", {
+      method: "POST",
+      body: formData
+    })
+      .then(res => {
+        window.location = "./cards.html"
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  function buscarPeloId() {
+    fetch(`/usuarios/${buscaInput.value}`, {
+      method: "GET"
+    })
+      .then(res => {
+        res.json().then(json => {
+          const usuario = json[0];
+          container.innerHTML = `<div>
+    <h1>${usuario.nickname}</h1>
+    <img src='assets/${usuario.imagem_perfil}' alt="imagem de usuario">
+  </div>`
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  function publicar() {
+        var idUsuario = sessionStorage.ID_USUARIO;
+
+        var corpo = {
+            titulo: form_postagem.titulo.value,
+            descricao: form_postagem.descricao.value
+        }
+
+        fetch(`/avisos/publicar/${idUsuario}`, {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(corpo)
+        }).then(function (resposta) {
+
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                window.alert("Post realizado com sucesso pelo usuario de ID: " + idUsuario + "!");
+                window.location = "/dashboard/mural.html";
+                limparFormulario();
+                finalizarAguardar();
+            } else if (resposta.status == 404) {
+                window.alert("Deu 404!");
+            } else {
+                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+            finalizarAguardar();
+        });
+
+        return false;
+
+    }
+
+    
+    /*function exibirAquarios() {
         JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
             document.getElementById("cardAquarios").innerHTML += `
                     <div class="card-aquario">
@@ -125,7 +204,7 @@
                     </div>
                     `
         });
-    }
+    }*/
 
 </script>
 

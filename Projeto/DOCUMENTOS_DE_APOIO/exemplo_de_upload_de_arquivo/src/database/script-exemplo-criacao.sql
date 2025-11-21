@@ -14,4 +14,6 @@ create table usuario (
   nome varchar(45),
   email varchar(45),
   imagem_perfil varchar(255)
-)
+);
+
+select * from usuario;

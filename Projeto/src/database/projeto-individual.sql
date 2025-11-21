@@ -51,5 +51,14 @@ create table perfil (
     avatar varchar(50)
     );
     
-    show tables;
-    select * from usuario;
+show tables;
+desc comentario;
+select * from usuario;
+
+select * from foto;
+
+select * from comentario;
+
+select * from curtida;
+
+select * from perfil;
