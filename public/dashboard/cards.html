@@ -65,8 +65,8 @@
             <div class="postagem">
                 <div class="miniPerfil"><img src="../assets/imgs/pessoa3.png"></div>
                     <p>
-                        <input name="foto" id="iptFoto" type="file" />
-                        <input name="descricao" id="iptDescricao" placeholder="Escreva algo...">
+                        <input name="foto" id="foto" type="file" />
+                        <input name="descricao" id="descricao" placeholder="Escreva algo...">
                         <button onclick="enviar()">Enviar</button>
                     </p>
                 
@@ -120,7 +120,7 @@
     formData.append('foto', foto.files[0])
     formData.append('descricao', descricao.value)
 
-    fetch("/usuarios/cadastro", {
+    fetch("/foto/cadastro", {
       method: "POST",
       body: formData
     })
@@ -133,7 +133,7 @@
   }
 
   function buscarPeloId() {
-    fetch(`/usuarios/${buscaInput.value}`, {
+    fetch(`/foto/${buscaInput.value}`, {
       method: "GET"
     })
       .then(res => {
@@ -150,62 +150,4 @@
       })
   }
 
-  function publicar() {
-        var idUsuario = sessionStorage.ID_USUARIO;
-
-        var corpo = {
-            titulo: form_postagem.titulo.value,
-            descricao: form_postagem.descricao.value
-        }
-
-        fetch(`/avisos/publicar/${idUsuario}`, {
-            method: "post",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(corpo)
-        }).then(function (resposta) {
-
-            console.log("resposta: ", resposta);
-
-            if (resposta.ok) {
-                window.alert("Post realizado com sucesso pelo usuario de ID: " + idUsuario + "!");
-                window.location = "/dashboard/mural.html";
-                limparFormulario();
-                finalizarAguardar();
-            } else if (resposta.status == 404) {
-                window.alert("Deu 404!");
-            } else {
-                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
-            }
-        }).catch(function (resposta) {
-            console.log(`#ERRO: ${resposta}`);
-            finalizarAguardar();
-        });
-
-        return false;
-
-    }
-
-    
-    /*function exibirAquarios() {
-        JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
-            document.getElementById("cardAquarios").innerHTML += `
-                    <div class="card-aquario">
-                        <div class="title-aquario">
-                            <h1>${item.descricao}</h1>
-                        </div>
-                        <div class="desc-aquario">
-                        <div class="temperatura">
-                            <p id="temp_aquario_${item.id}">-°C</p>
-                        </div>
-                        <div class="cor-alerta" id="card_${item.id}"></div>
-                    </div>
-                    </div>
-                    `
-        });
-    }*/
-
 </script>
-
-</html>

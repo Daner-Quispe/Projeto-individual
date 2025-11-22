@@ -1,15 +1,20 @@
-var express = require("express");
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const upload = require('../config/configUpload'); // ARQUIVO COM A CONFIGURAÇÃO DO UPLOAD
+const fotoController = require('../controllers/fotoController');
 
-var fotoController = require("../controllers/fotoController")
-
-router.post("/cadastrar", function (req, res) {
-    //função a ser chamada quando acessar /foto/cadastrar
-    fotoController.cadastrar(req, res)
+router.get("", (req, res) => {
+  res.render("cards")
 });
-router.get("/listar", function (req, res) {
-    //função a ser chamada quando acessar /foto/listar
-    fotoController.listar(req, res)
-})
+
+// upload.single('foto') vai buscar no json alguma propriedade chamada foto 
+router.post('/cadastro', upload.single('foto'), (req, res) => {
+  fotoController.salvar(req, res);
+});
+
+router.get('/:id', upload.single('foto'), (req, res) => {
+  fotoController.buscarUsuarioPeloId(req, res);
+});
 
 module.exports = router;
+

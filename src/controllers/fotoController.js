@@ -1,27 +1,29 @@
-var fotoModel = require("../models/fotoModel");
+const fotoModel = require('../models/fotoModel');
 
-function listar(req, res) {
-    fotoModel.listar().then(function(resultado) {
-        //precisamos informar que o resultado voltará para o font-end como uma respota em json
-        res.status(200).json(resultado);
-    }).catch(function (erro){
-        res.status(500).json(erro.sqlMessage);
-    })
+
+function salvar(req, res) {
+  const imagem = req.file.filename;
+
+  const {descricao} = req.body
+
+  const foto = { descricao, imagem }
+  
+  fotoModel.salvar (foto)
+  .then(resultado => {
+    res.status(201).send("foto criado com sucesso");
+  }).catch(err => {
+    res.status(500).send(err);
+  });
 }
 
-function cadastrar(req, res) {
-    var url = req.body.urlServer;
-    var descricao = req.body.descricaoServer;
-    var usuario_idUser = req.body.usuario_idUserServer;
-      
-    fotoModel.cadastrar(url, descricao, usuario_idUser).then(function (respota){
-        res.status(200).send("Foto criada com sucesso");
-    }).catch(function (erro) {
-        res.status(500).json(erro.sqlMessage);
-    })
+function buscarUsuarioPeloId(req, res) {
+  console.log(req.params.id);
+  usuarioModel.buscarUsuarioPeloId(req.params.id)
+  .then(resultado => {
+    res.json(resultado);
+  }).catch(err => {
+    res.status(500).send(err);
+  });
 }
 
-module.exports = {
-    listar,
-    cadastrar
-}
+module.exports = { salvar, buscarUsuarioPeloId }
