@@ -20,7 +20,7 @@
         rel="stylesheet">
 </head>
 
-<!--<body onload="validarSessao(), exibirAquarios(),  atualizacaoPeriodica()">-->
+<body onload="validarSessao(), carregarFeed()">
 
     <div class="janela">
 
@@ -119,35 +119,36 @@
     const formData = new FormData();
     formData.append('foto', foto.files[0])
     formData.append('descricao', descricao.value)
+    formData.append('id', sessionStorage.ID_USUARIO)
 
     fetch("/foto/cadastro", {
       method: "POST",
       body: formData
     })
       .then(res => {
-        window.location = "./cards.html"
+        carregarFeed();
       })
       .catch(err => {
         console.log(err);
       })
   }
 
-  function buscarPeloId() {
-    fetch(`/foto/${buscaInput.value}`, {
-      method: "GET"
-    })
-      .then(res => {
-        res.json().then(json => {
-          const usuario = json[0];
-          container.innerHTML = `<div>
-    <h1>${usuario.nickname}</h1>
-    <img src='assets/${usuario.imagem_perfil}' alt="imagem de usuario">
-  </div>`
+  function carregarFeed() {
+    fetch("/foto/listar")
+        .then(res => res.json())
+        .then(lista => {
+            container.innerHTML = "";
+
+            lista.forEach(foto => {
+                container.innerHTML += `
+                    <div class="card">
+                        <img src="/assets/${foto.url}">
+                        <p>${foto.descricao}</p>
+                    </div>
+                `;
+            });
         })
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }
+        .catch(err => console.log(err));
+}
 
 </script>

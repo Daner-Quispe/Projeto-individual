@@ -1,15 +1,15 @@
 const database = require("../database/config");
 
 function salvar(foto) {
-  const instrucao = `insert into foto (url, descricao) values ('${foto.imagem}', '${foto.descricao}');`;
+  const instrucao = `insert into foto (url, descricao, usuario_idUser) values ('${foto.imagem}', '${foto.descricao}', ${foto.id});`;
 
   return database.executar(instrucao);
 }
 
-function buscarUsuarioPeloId(id) {
-  const instrucao = `select * from foto where id = ${id}`;
+function carregarFeed(id) {
+  const instrucao = `select url, descricao from foto`;
 
   return database.executar(instrucao);
 }
 
-module.exports = { salvar, buscarUsuarioPeloId }
+module.exports = { salvar, carregarFeed }

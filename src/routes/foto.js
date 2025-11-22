@@ -12,8 +12,8 @@ router.post('/cadastro', upload.single('foto'), (req, res) => {
   fotoController.salvar(req, res);
 });
 
-router.get('/:id', upload.single('foto'), (req, res) => {
-  fotoController.buscarUsuarioPeloId(req, res);
+router.get('/listar', upload.single('foto'), (req, res) => {
+  fotoController.carregarFeed(req, res);
 });
 
 module.exports = router;

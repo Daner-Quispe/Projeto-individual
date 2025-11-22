@@ -214,6 +214,10 @@ body {
   align-items: center;
   color: white;
 }
+.card img {
+  width: 300px;
+  height: auto;
+}
 
 .card-aquario {
   margin: 2%;
@@ -239,6 +243,7 @@ body {
   font-weight: lighter;
   text-align: left;
 }
+
 
 .desc-aquario {
   display: flex;

@@ -17,7 +17,7 @@ create table foto (
 	idFoto int primary key auto_increment,
     url varchar(255),
     descricao varchar(200),
-    dtPostagem datetime,
+    dtPostagem timestamp default current_timestamp,
     usuario_idUser int,
     constraint fkUsuarioFoto
 		foreign key (usuario_idUser) references usuario(idUser)    
@@ -51,11 +51,10 @@ create table perfil (
     avatar varchar(50)
     );
     
-show tables;
-desc comentario;
 select * from usuario;
 
 select * from foto;
+select url, descricao, usuario_idUser from foto;
 
 select * from comentario;
 
