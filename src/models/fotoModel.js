@@ -7,7 +7,7 @@ function salvar(foto) {
 }
 
 function carregarFeed(id) {
-  const instrucao = `select url, descricao from foto`;
+  const instrucao = `select idFoto, url, descricao from foto`;
 
   return database.executar(instrucao);
 }

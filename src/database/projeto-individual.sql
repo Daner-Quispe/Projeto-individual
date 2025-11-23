@@ -1,6 +1,11 @@
 create database projetoIndv;
 use projetoIndv;
 
+create table perfil (
+	idPerfil int primary key, 
+    avatar varchar(50)
+    );
+    
 create table usuario (
 	idUser int primary key auto_increment,
     nome  varchar(100) not null,
@@ -26,7 +31,7 @@ create table foto (
 create table comentario (
 	idComent int primary key auto_increment,
     comentario varchar(150),
-    dtComentario date,
+    dtComentario timestamp default current_timestamp,
     usuario_idUser int,
     constraint fkComentarioUsuario
 		foreign key (usuario_idUser) references usuario(idUser),
@@ -44,11 +49,6 @@ create table curtida (
 		foreign key(usuario_idUser) references usuario(idUser),
 	constraint fkCurtidaFoto
 		foreign key(foto_idFoto) references foto(idFoto)
-    );
-    
-create table perfil (
-	idPerfil int primary key, 
-    avatar varchar(50)
     );
     
 select * from usuario;

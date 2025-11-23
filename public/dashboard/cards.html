@@ -144,11 +144,41 @@
                     <div class="card">
                         <img src="/assets/${foto.url}">
                         <p>${foto.descricao}</p>
+                        <div class="comentario">
+                            <input name="comentario" id="comentario-${foto.idFoto}" placeholder="Comentar..."><button onclick="comentar(${foto.idFoto})">Enviar</button>
+                            <div class="listaComentario" id="listaComentario"></div>
+                        </div>
                     </div>
                 `;
             });
         })
         .catch(err => console.log(err));
 }
+
+    function comentar(idFoto) {
+    var idUsuario = sessionStorage.ID_USUARIO;
+    var textoComentario = document.getElementById(`comentario-${idFoto}`).value;
+
+    fetch(`/comentario/comentar/${idFoto}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            comentario: textoComentario,
+            idUsuario: idUsuario
+        })
+    })
+        .then(resposta => {
+            console.log("resposta:", resposta);
+            if (resposta.ok) {
+                alert("Comentado!");
+            } else {
+                alert("Erro ao comentar: " + resposta.status);
+            }
+        })
+        .catch(err => console.log("ERRO:", err));
+}
+
 
 </script>
