@@ -27,6 +27,17 @@ function comentar(req, res) {
         });
 }
 
+function listar(req, res) {
+    var idFoto = req.params.idFoto
+    comentarioModel.listar(idFoto)
+    .then(resultado => {
+    res.json(resultado);
+  }).catch(err => {
+    res.status(500).send(err);
+  });
+}
+
 module.exports = {
-    comentar
+    comentar,
+    listar
 }

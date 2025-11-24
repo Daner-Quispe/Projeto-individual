@@ -57,6 +57,14 @@ select * from foto;
 select url, descricao, usuario_idUser from foto;
 
 select * from comentario;
+select u.nickname, c.comentario, c.dtComentario 
+from comentario c join usuario u 
+	on c.usuario_idUser = u.idUser;
+select u.nickname, c.comentario, c.usuario_idUser, c.foto_idFoto
+FROM usuario u join  comentario c 
+	ON u.idUser = c.usuario_idUser
+WHERE foto_idFoto = 1
+ORDER BY dtComentario DESC;
 
 select * from curtida;
 

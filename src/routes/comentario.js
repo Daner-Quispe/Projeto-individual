@@ -7,4 +7,8 @@ router.post("/comentar/:idFoto", function (req, res) {
     comentarioController.comentar(req, res);
 });
 
+router.get("/listar/:idFoto", function(req, res) {
+    comentarioController.listar(req, res);
+});
+
 module.exports = router;

@@ -146,10 +146,11 @@
                         <p>${foto.descricao}</p>
                         <div class="comentario">
                             <input name="comentario" id="comentario-${foto.idFoto}" placeholder="Comentar..."><button onclick="comentar(${foto.idFoto})">Enviar</button>
-                            <div class="listaComentario" id="listaComentario"></div>
+                            <div class="listaComentario" id="listaComentario-${foto.idFoto}"></div>
                         </div>
                     </div>
                 `;
+                carregarComentarios(foto.idFoto);
             });
         })
         .catch(err => console.log(err));
@@ -173,12 +174,26 @@
             console.log("resposta:", resposta);
             if (resposta.ok) {
                 alert("Comentado!");
+                document.getElementById(`comentario-${idFoto}`).value = "";
+                carregarComentarios(idFoto);
             } else {
                 alert("Erro ao comentar: " + resposta.status);
             }
         })
         .catch(err => console.log("ERRO:", err));
-}
+    }
 
+    function carregarComentarios(idFoto) {
+        fetch(`/comentario/listar/${idFoto}`)
+        .then(res => res.json())
+        .then(lista => {
 
+            document.getElementById(`listaComentario-${idFoto}`).innerHTML = "";
+            lista.forEach(c => {
+                document.getElementById(`listaComentario-${idFoto}`).innerHTML += `
+                    <p>Usuário ${c.nickname}: ${c.comentario}</p>
+                `;
+            });
+        });
+    }
 </script>

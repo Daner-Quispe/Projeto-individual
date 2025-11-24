@@ -12,6 +12,19 @@ function comentar(comentario, idUsuario, idFoto) {
     return database.executar(instrucaoSql);
 }
 
+function listar(idFoto) {
+    var instrucaoSql = `
+    SELECT u.nickname, c.comentario, c.usuario_idUser, c.foto_idFoto
+    FROM usuario u JOIN comentario c 
+	ON u.idUser = c.usuario_idUser
+    WHERE foto_idFoto = ${idFoto}
+    ORDER BY dtComentario DESC;`;
+    console.log("Executando SQL:", instrucaoSql);
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
-    comentar
+    comentar,
+    listar
 }
