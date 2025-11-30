@@ -23,6 +23,7 @@ var aquariosRouter = require("./src/routes/aquarios");
 var empresasRouter = require("./src/routes/empresas");
 var fotoRouter = require("./src/routes/foto")
 var comentarioRouter = require("./src/routes/comentario")
+var curtidaRouter = require("./src/routes/curtida");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -37,7 +38,8 @@ app.use("/medidas", medidasRouter);
 app.use("/aquarios", aquariosRouter);
 app.use("/empresas", empresasRouter);
 app.use("/foto", fotoRouter);
-app.use("/comentario", comentarioRouter)
+app.use("/comentario", comentarioRouter);
+app.use("/curtida", curtidaRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

@@ -106,8 +106,8 @@
             </div>-->
 
         </div>
-
     </div>
+    
 
 </body>
 
@@ -142,10 +142,15 @@
             lista.forEach(foto => {
                 container.innerHTML += `
                     <div class="card">
-                        <img src="/assets/${foto.url}">
-                        <p>${foto.descricao}</p>
+                        <div class="imagemDesc">
+                            <img src="/assets/${foto.url}">
+                            <p>${foto.descricao}</p>
+                        </div>
+                        <div class="like">
+                            <button onclick="curtirOuDescurtir(${foto.idFoto})">❤️</button>
+                        </div>
                         <div class="comentario">
-                            <input name="comentario" id="comentario-${foto.idFoto}" placeholder="Comentar..."><button onclick="comentar(${foto.idFoto})">Enviar</button>
+                            <input name="comentario" id="comentario-${foto.idFoto}" placeholder="Comentar..."><button onclick="comentar(${foto.idFoto})"><img src="../assets/imgs/enviar-mensagem.png"></button>
                             <div class="listaComentario" id="listaComentario-${foto.idFoto}"></div>
                         </div>
                     </div>
@@ -195,5 +200,29 @@
                 `;
             });
         });
+    }
+
+    function curtirOuDescurtir(idFoto) {
+        var idUsuario = sessionStorage.ID_USUARIO;
+        
+        
+        fetch(`/curtida/curtirOuDescurtir/${idFoto}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            idUsuario: idUsuario,
+            idFoto: idFoto
+            })
+        })
+        .then(r => r.json())
+        .then(resposta => {
+            console.log("resposta:", resposta);
+            if (resposta.status === "curtido" ) {
+                alert("Curtido!");
+            } else {
+                alert("Descurtido");
+            }
+        })
+        .catch(err => console.log("ERRO:", err));
     }
 </script>

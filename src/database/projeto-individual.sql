@@ -41,10 +41,12 @@ create table comentario (
     );
     
 create table curtida (
+	idCurtida int auto_increment,
 	usuario_idUser int,
     foto_idFoto int,
+    dtCurtida timestamp default current_timestamp,
     constraint pkUserFoto
-		primary key (usuario_idUser, foto_idFoto),
+		primary key (idCurtida, usuario_idUser, foto_idFoto),
 	constraint fkCurtidaUsuario
 		foreign key(usuario_idUser) references usuario(idUser),
 	constraint fkCurtidaFoto
