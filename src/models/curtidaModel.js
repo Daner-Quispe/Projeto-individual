@@ -30,8 +30,42 @@ function descurtir(idUsuario, idFoto) {
         return database.executar(instrucaoSql);
 }
 
+function contar(idFoto) {
+    var instrucaoSql = `
+    SELECT  COUNT(usuario_idUser) AS totalLikes FROM curtida 
+    WHERE foto_idFoto = ${idFoto};
+    `
+
+        return database.executar(instrucaoSql);
+}
+
+function totalCurtida(idUsuario) {
+    var instrucaoSql = `
+    SELECT COUNT(cur.usuario_idUser) AS 'Total Curtida' FROM foto f 
+    LEFT JOIN curtida cur ON cur.foto_idFoto = f.idFoto 
+    WHERE f.usuario_idUser = ${idUsuario};
+    `
+        return database.executar(instrucaoSql);
+}
+
+function curtidaPorDia(idUsuario) {
+    var instrucaoSql = `
+    SELECT 
+    DATE(cur.dtCurtida) AS 'Data', COUNT(*) AS 'Curtidas' 
+    FROM curtida cur JOIN foto f 
+    ON f.idFoto = cur.foto_idFoto
+    WHERE f.usuario_idUser = 1
+    GROUP BY DATE(cur.dtCurtida)
+    ORDER BY DATE(cur.dtCurtida);
+    `
+        return database.executar(instrucaoSql);
+}
+
 module.exports = {
     verificarCurtida,
     curtir,
-    descurtir
+    descurtir,
+    contar,
+    totalCurtida,
+    curtidaPorDia
 }

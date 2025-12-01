@@ -41,17 +41,16 @@ create table comentario (
     );
     
 create table curtida (
-	idCurtida int auto_increment,
+	idCurtida int primary key auto_increment,
 	usuario_idUser int,
     foto_idFoto int,
     dtCurtida timestamp default current_timestamp,
-    constraint pkUserFoto
-		primary key (idCurtida, usuario_idUser, foto_idFoto),
 	constraint fkCurtidaUsuario
 		foreign key(usuario_idUser) references usuario(idUser),
 	constraint fkCurtidaFoto
 		foreign key(foto_idFoto) references foto(idFoto)
     );
+alter table curtida add constraint unqUserFoto unique(usuario_idUser, foto_idFoto);
     
 select * from usuario;
 
@@ -71,3 +70,30 @@ ORDER BY dtComentario DESC;
 select * from curtida;
 
 select * from perfil;
+
+-- Quantidade total de curtidas em uma foto
+select count(usuario_idUser) from curtida where foto_idFoto = 1;
+
+-- Quantidade total de curtidas de todas as fotos de um usuario
+select count(cur.usuario_idUser) as 'Total Curtida' from foto f 
+left join curtida cur on cur.foto_idFoto = f.idFoto 
+where f.usuario_idUser = 1;
+
+-- Data que teve pelo menos uma curtida(exemplo descartado)
+select distinct(concat(day(dtCurtida), '/', month(dtCurtida))) as 'Data da Curtida' from curtida;
+
+-- Total de curtidas recebidas em uma data
+SELECT 
+    DATE(dtCurtida) AS dataCurtida,
+    COUNT(*) AS totalCurtidas
+FROM curtida
+WHERE foto_idFoto IN (
+    SELECT idFoto FROM foto WHERE usuario_idUser = 1
+)
+GROUP BY DATE(dtCurtida)
+ORDER BY DATE(dtCurtida);
+
+
+select * from foto;
+select * from usuario;
+select * from curtida;

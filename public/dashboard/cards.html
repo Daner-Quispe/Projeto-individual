@@ -23,7 +23,6 @@
 <body onload="validarSessao(), carregarFeed()">
 
     <div class="janela">
-
         <div class="header-left dash-header">
 
             <h1>FotoDiário</h1>
@@ -145,10 +144,12 @@
                         <div class="imagemDesc">
                             <img src="/assets/${foto.url}">
                             <p>${foto.descricao}</p>
+                            <div class="like">
+                                <button id="botao-${foto.idFoto}" onclick="curtirOuDescurtir(${foto.idFoto})"></button>
+                                <div id="likes${foto.idFoto}"></div>
+                            </div>
                         </div>
-                        <div class="like">
-                            <button onclick="curtirOuDescurtir(${foto.idFoto})">❤️</button>
-                        </div>
+                        
                         <div class="comentario">
                             <input name="comentario" id="comentario-${foto.idFoto}" placeholder="Comentar..."><button onclick="comentar(${foto.idFoto})"><img src="../assets/imgs/enviar-mensagem.png"></button>
                             <div class="listaComentario" id="listaComentario-${foto.idFoto}"></div>
@@ -156,36 +157,38 @@
                     </div>
                 `;
                 carregarComentarios(foto.idFoto);
+                verificarCurtida(foto.idFoto);
+                contarLike(foto.idFoto)
             });
         })
         .catch(err => console.log(err));
 }
 
     function comentar(idFoto) {
-    var idUsuario = sessionStorage.ID_USUARIO;
-    var textoComentario = document.getElementById(`comentario-${idFoto}`).value;
+        var idUsuario = sessionStorage.ID_USUARIO;
+        var textoComentario = document.getElementById(`comentario-${idFoto}`).value;
 
-    fetch(`/comentario/comentar/${idFoto}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            comentario: textoComentario,
-            idUsuario: idUsuario
+        fetch(`/comentario/comentar/${idFoto}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                comentario: textoComentario,
+                idUsuario: idUsuario
+            })
         })
-    })
-        .then(resposta => {
-            console.log("resposta:", resposta);
-            if (resposta.ok) {
-                alert("Comentado!");
-                document.getElementById(`comentario-${idFoto}`).value = "";
-                carregarComentarios(idFoto);
-            } else {
-                alert("Erro ao comentar: " + resposta.status);
-            }
-        })
-        .catch(err => console.log("ERRO:", err));
+            .then(resposta => {
+                console.log("resposta:", resposta);
+                if (resposta.ok) {
+                    alert("Comentado!");
+                    document.getElementById(`comentario-${idFoto}`).value = "";
+                    carregarComentarios(idFoto);
+                } else {
+                    alert("Erro ao comentar: " + resposta.status);
+                }
+            })
+            .catch(err => console.log("ERRO:", err));
     }
 
     function carregarComentarios(idFoto) {
@@ -202,9 +205,9 @@
         });
     }
 
+    
     function curtirOuDescurtir(idFoto) {
         var idUsuario = sessionStorage.ID_USUARIO;
-        
         
         fetch(`/curtida/curtirOuDescurtir/${idFoto}`, {
         method: "POST",
@@ -217,11 +220,46 @@
         .then(r => r.json())
         .then(resposta => {
             console.log("resposta:", resposta);
+
+            var button = document.getElementById(`botao-${idFoto}`)
+
             if (resposta.status === "curtido" ) {
                 alert("Curtido!");
+                button.innerHTML = "❤️"; 
             } else {
                 alert("Descurtido");
+                button.innerHTML = "🤍";
             }
+            contarLike(idFoto);
+        })
+        .catch(err => console.log("ERRO:", err));
+    }
+
+    function contarLike(idFoto) {
+        fetch(`/curtida/contar/${idFoto}`)
+        .then(r => r.json())
+        .then(resposta => {
+            document.getElementById(`likes${idFoto}`).innerHTML = resposta[0].totalLikes;
+        })
+    }
+
+    function verificarCurtida(idFoto) {
+        console.log("id foto:", idFoto)
+        var idUsuario = sessionStorage.ID_USUARIO;
+
+        fetch(`/curtida/verificar/${idUsuario}/${idFoto}`)
+            .then(r => r.json())
+            .then(resposta => {
+            console.log("resposta:", resposta);
+
+            var button = document.getElementById(`botao-${idFoto}`)
+
+            if (resposta.curtido) {
+                button.innerHTML = "❤️"; 
+            } else {
+                button.innerHTML = "🤍";
+            }
+            
         })
         .catch(err => console.log("ERRO:", err));
     }

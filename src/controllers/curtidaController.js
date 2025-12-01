@@ -8,9 +8,6 @@ function curtirOuDescurtir(req, res) {
         return res.status(400).send("Dados faltando");
     }
 
-    console.log("ID Usuario:", idUsuario);
-    console.log("ID Foto:", idFoto);
-
     curtidaModel.verificarCurtida(idUsuario, idFoto)
     .then(resultado => {
         if (resultado.length > 0) {
@@ -19,6 +16,28 @@ function curtirOuDescurtir(req, res) {
         } else {
             return curtidaModel.curtir(idUsuario, idFoto)
                 .then(() => res.json({ status: "curtido"}));
+        }
+    })
+    .catch(erro => {
+        console.log("Erro no SQL:", erro);
+        res.status(500).json(erro.sqlMessage);
+    })
+}
+
+function verificar(req, res) {
+    var idUsuario = req.params.idUsuario;
+    var idFoto = req.params.idFoto;
+
+     if (!idUsuario || !idFoto) {
+        return res.status(400).send("Dados faltando");
+    }
+
+    curtidaModel.verificarCurtida(idUsuario, idFoto)
+    .then(resultado => {
+        if (resultado.length > 0) {
+            res.json({curtido: true})
+        } else {
+            res.json({curtido: false})
         }
     })
     .catch(erro => {
@@ -45,8 +64,35 @@ function curtir(req, res) {
             res.status(500).json(erro.sqlMessage);
         });   
 }
+function contar(req, res) {
+    var idFoto = req.params.idFoto;
+
+    if (!idFoto) {
+        return res.status(400).send("Dados faltando");
+    }
+    console.log("ID Foto:", idFoto);
+
+    curtidaModel.contar(idFoto)
+        .then(resultado => res.json(resultado))
+        .catch(erro => {
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+function curtidaPorDia(req, res) {
+    var idUsuario = req.params.idUsuario;
+
+    curtidaModel.curtidaPorDia(idUsuario)
+        .then(resultado => res.json(resultado))
+        .catch(erro => {
+            res.status(500).json(erro.sqlMessage);
+        });
+}
 
 module.exports = {
     curtirOuDescurtir,
-    curtir
+    verificar,
+    curtir,
+    contar,
+    curtidaPorDia
 }
