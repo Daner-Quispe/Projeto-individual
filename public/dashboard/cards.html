@@ -138,7 +138,9 @@
         .then(lista => {
             container.innerHTML = "";
 
-            lista.forEach(foto => {
+            for (let i = 0; i < lista.length; i++) {
+                var foto = lista[i]
+                
                 container.innerHTML += `
                     <div class="post">
                         <div class="imagemDesc">
@@ -148,6 +150,9 @@
                                 <button id="botao-${foto.idFoto}" onclick="curtirOuDescurtir(${foto.idFoto})"></button>
                                 <div id="likes${foto.idFoto}"></div>
                             </div>
+                            <button onclick="excluirFoto('{{idFoto}}')" class="botao-excluir">
+                                Excluir
+                            </button>
                         </div>
                         
                         <div class="comentario">
@@ -161,7 +166,9 @@
                 carregarComentarios(foto.idFoto);
                 verificarCurtida(foto.idFoto);
                 contarLike(foto.idFoto)
-            });
+            ;
+            }
+                
         })
         .catch(err => console.log(err));
 }

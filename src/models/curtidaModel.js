@@ -50,8 +50,7 @@ function totalCurtida(idUsuario) {
 
 function curtidaPorDia(idUsuario) {
     var instrucaoSql = `
-    SELECT 
-    DATE(cur.dtCurtida) AS 'Data', COUNT(cur.idCurtida) AS 'Curtidas' 
+    SELECT DATE(cur.dtCurtida) AS 'Data', COUNT(cur.idCurtida) AS 'Curtidas' 
     FROM curtida cur JOIN foto f 
     ON f.idFoto = cur.foto_idFoto
     WHERE f.usuario_idUser = ${idUsuario}
@@ -61,11 +60,24 @@ function curtidaPorDia(idUsuario) {
         return database.executar(instrucaoSql);
 }
 
+function maiorCurtida(idUsuario) {
+    var instrucaoSql = `
+    SELECT DATE_FORMAT(cur.dtCurtida, '%d/%m') AS dia,
+    COUNT(cur.idCurtida) AS total 
+    FROM curtida cur JOIN foto f ON f.idFoto = cur.foto_idFoto 
+    WHERE f.usuario_idUser = ${idUsuario}
+    GROUP BY DATE_FORMAT(cur.dtCurtida, '%d/%m')
+    ORDER BY total DESC;
+    `
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     verificarCurtida,
     curtir,
     descurtir,
     contar,
     totalCurtida,
-    curtidaPorDia
+    curtidaPorDia,
+    maiorCurtida
 }

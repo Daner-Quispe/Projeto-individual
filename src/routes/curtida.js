@@ -19,4 +19,8 @@ router.get("/curtidaPorDia/:idUsuario", function (req, res) {
     curtidaController.curtidaPorDia(req, res)
 })
 
+router.get("/maiorCurtida/:idUsuario", function (req, res) {
+    curtidaController.maiorCurtida(req, res)
+})
+
 module.exports = router;

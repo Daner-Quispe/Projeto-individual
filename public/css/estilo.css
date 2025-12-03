@@ -179,10 +179,18 @@ input {
   align-items: center;
   justify-content: space-around;
   flex-direction: column;
+  width: 70%;
   color:#ffffff;
   height: fit-content;
   padding: 20px 0;
   margin-bottom: 20px;
+}
+
+.validar {
+  display: flex;
+  justify-content: center;
+  color: red;
+  margin: 0;
 }
 
 .post {

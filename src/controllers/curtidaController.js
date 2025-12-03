@@ -89,10 +89,21 @@ function curtidaPorDia(req, res) {
         });
 }
 
+function maiorCurtida(req, res) {
+    var idUsuario = req.params.idUsuario;
+
+    curtidaModel.maiorCurtida(idUsuario)
+        .then(resultado => res.json(resultado))
+        .catch(erro => {
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
     curtirOuDescurtir,
     verificar,
     curtir,
     contar,
-    curtidaPorDia
+    curtidaPorDia,
+    maiorCurtida
 }
