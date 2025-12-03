@@ -27,4 +27,17 @@ function carregarFeed(req, res) {
   });
 }
 
-module.exports = { salvar, carregarFeed }
+function totalFotos(req, res) {
+  var idUsuario = req.params.idUsuario;
+
+  fotoModel.totalFotos(idUsuario)
+  .then(resultado => {
+    res.status(200).json(resultado[0])
+  })
+  .catch(err => {
+    res.status(500).send(err);
+  })
+}
+
+
+module.exports = { salvar, carregarFeed, totalFotos }

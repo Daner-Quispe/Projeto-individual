@@ -51,7 +51,7 @@ function totalCurtida(idUsuario) {
 function curtidaPorDia(idUsuario) {
     var instrucaoSql = `
     SELECT 
-    DATE(cur.dtCurtida) AS 'Data', COUNT(*) AS 'Curtidas' 
+    DATE(cur.dtCurtida) AS 'Data', COUNT(cur.idCurtida) AS 'Curtidas' 
     FROM curtida cur JOIN foto f 
     ON f.idFoto = cur.foto_idFoto
     WHERE f.usuario_idUser = ${idUsuario}

@@ -27,7 +27,7 @@
 
             <h1>FotoDiário</h1>
 
-            <div class="perfil"><img src="../assets/imgs/pessoa3.png"></div>
+            <div class="perfil"><img src="../assets/imgs/perfil-masculino2.png"></div>
 
             <div class="hello">
                 <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
@@ -64,7 +64,7 @@
             <div class="postagem">
                 <div class="miniPerfil"><img src="../assets/imgs/pessoa3.png"></div>
                     <p>
-                        <input name="foto" id="foto" type="file" />
+                        <input name="foto" id="foto" type="file"/>
                         <input name="descricao" id="descricao" placeholder="Escreva algo...">
                         <button onclick="enviar()">Enviar</button>
                     </p>
@@ -140,7 +140,7 @@
 
             lista.forEach(foto => {
                 container.innerHTML += `
-                    <div class="card">
+                    <div class="post">
                         <div class="imagemDesc">
                             <img src="/assets/${foto.url}">
                             <p>${foto.descricao}</p>
@@ -151,7 +151,9 @@
                         </div>
                         
                         <div class="comentario">
-                            <input name="comentario" id="comentario-${foto.idFoto}" placeholder="Comentar..."><button onclick="comentar(${foto.idFoto})"><img src="../assets/imgs/enviar-mensagem.png"></button>
+                            <div class="comentarPost">
+                                <input name="comentario" id="comentario-${foto.idFoto}" placeholder="Comentar..."><button onclick="comentar(${foto.idFoto})"><img src="../assets/imgs/enviar-mensagem.png"></button>
+                            </div>
                             <div class="listaComentario" id="listaComentario-${foto.idFoto}"></div>
                         </div>
                     </div>
@@ -199,7 +201,7 @@
             document.getElementById(`listaComentario-${idFoto}`).innerHTML = "";
             lista.forEach(c => {
                 document.getElementById(`listaComentario-${idFoto}`).innerHTML += `
-                    <p>Usuário ${c.nickname}: ${c.comentario}</p>
+                    <div class="perfilComentario"><img src="../assets/imgs/pessoa3.png"></div><p> ${c.nickname}: ${c.comentario}</p>
                 `;
             });
         });

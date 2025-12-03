@@ -94,14 +94,23 @@ GROUP BY DATE(dtCurtida)
 ORDER BY DATE(dtCurtida);
 
 -- Outra data curtidas recebidas no dia
-SELECT 
-    DATE(cur.dtCurtida) AS 'Data',
-    COUNT(*) AS 'Curtidas'
-FROM curtida cur
-JOIN foto f ON f.idFoto = cur.foto_idFoto
-WHERE f.usuario_idUser = 1
-GROUP BY DATE(cur.dtCurtida)
-ORDER BY DATE(cur.dtCurtida);
+select date(cur.dtCurtida) as 'Data',
+    count(*) as 'Curtidas'
+from curtida cur
+join foto f on f.idFoto = cur.foto_idFoto
+where f.usuario_idUser = 1
+group by date(cur.dtCurtida)
+order by date(cur.dtCurtida);
+
+-- Selecionar total de fotos de um usuario
+select count(idFoto) from foto where usuario_idUser = 1;
+
+-- selecionar o dia com mais curtidas
+select date(dtCurtida) as dia, 
+count(idCurtida) as total
+from curtida
+group by date(dtCurtida)
+order by total desc;
 
 
 select * from foto;

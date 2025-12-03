@@ -6,10 +6,18 @@ function salvar(foto) {
   return database.executar(instrucao);
 }
 
-function carregarFeed(id) {
+function carregarFeed() {
   const instrucao = `select idFoto, url, descricao from foto`;
 
   return database.executar(instrucao);
 }
 
-module.exports = { salvar, carregarFeed }
+function totalFotos(idUsuario) {
+  var instrucaoSql = `
+  SELECT COUNT(idFoto) AS 'Fotos' FROM foto 
+  WHERE usuario_idUser = ${idUsuario}
+  `
+  return database.executar(instrucaoSql)
+}
+
+module.exports = { salvar, carregarFeed, totalFotos }

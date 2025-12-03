@@ -76,7 +76,10 @@
                 <div class="dados">
                     <p>Total de curtidas recebidas</p>
                     <h2><div id="likeTotal"></div></h2>
-                    
+                </div>
+                <div class="dados">
+                    <p>Fotos postadas</p>
+                    <h2><div id="fotoTotal"></div></h2>
                 </div>
             </div>
             </div>
@@ -97,7 +100,8 @@
     b_usuario.innerHTML = sessionStorage.NICKNAME_USUARIO;
 
     function dadosGrafico() {
-        let total = 0
+        let totalLike = 0
+        let totalFotos = 0
         var idUsuario = sessionStorage.ID_USUARIO;
 
         fetch(`/curtida/curtidaPorDia/${idUsuario}`)
@@ -107,11 +111,19 @@
                 gerarGrafico(resultado)
 
                 for (let i = 0; i < resultado.length; i++) {
-                    total += resultado[i].Curtidas;
+                    totalLike += resultado[i].Curtidas;
                 }
-                likeTotal.innerHTML = `${total}`
+                likeTotal.innerHTML = `${totalLike}`
             })
             .catch(erro => console.log("Erro:", erro));
+
+        fetch(`/foto/totalFoto/${idUsuario}`)
+            .then(r => r.json())
+            .then(resultado => {
+                totalFotos = resultado.Fotos
+                fotoTotal.innerHTML = `${totalFotos}`
+            })
+            
     }
 
     function gerarGrafico(resultado) {
@@ -156,6 +168,7 @@
     });
 
     }
+
 
 /*   
     function obterDadosGrafico(idAquario) {

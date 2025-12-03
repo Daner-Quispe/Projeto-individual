@@ -16,5 +16,9 @@ router.get('/listar', upload.single('foto'), (req, res) => {
   fotoController.carregarFeed(req, res);
 });
 
+router.get('/totalFoto/:idUsuario', function (req, res) {
+  fotoController.totalFotos(req, res);
+} )
+
 module.exports = router;
 
