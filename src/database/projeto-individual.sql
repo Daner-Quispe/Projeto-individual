@@ -93,6 +93,16 @@ WHERE foto_idFoto IN (
 GROUP BY DATE(dtCurtida)
 ORDER BY DATE(dtCurtida);
 
+-- Outra data curtidas recebidas no dia
+SELECT 
+    DATE(cur.dtCurtida) AS 'Data',
+    COUNT(*) AS 'Curtidas'
+FROM curtida cur
+JOIN foto f ON f.idFoto = cur.foto_idFoto
+WHERE f.usuario_idUser = 1
+GROUP BY DATE(cur.dtCurtida)
+ORDER BY DATE(cur.dtCurtida);
+
 
 select * from foto;
 select * from usuario;

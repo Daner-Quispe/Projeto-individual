@@ -54,10 +54,10 @@ function curtidaPorDia(idUsuario) {
     DATE(cur.dtCurtida) AS 'Data', COUNT(*) AS 'Curtidas' 
     FROM curtida cur JOIN foto f 
     ON f.idFoto = cur.foto_idFoto
-    WHERE f.usuario_idUser = 1
+    WHERE f.usuario_idUser = ${idUsuario}
     GROUP BY DATE(cur.dtCurtida)
     ORDER BY DATE(cur.dtCurtida);
-    `
+    `;
         return database.executar(instrucaoSql);
 }
 

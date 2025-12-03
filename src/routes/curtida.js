@@ -15,7 +15,7 @@ router.get("/verificar/:idUsuario/:idFoto", function (req, res) {
     curtidaController.verificar(req, res)
 });
 
-router.get("/curtidasPorDia/:idUsuario", function (req, res) {
+router.get("/curtidaPorDia/:idUsuario", function (req, res) {
     curtidaController.curtidaPorDia(req, res)
 })
 
