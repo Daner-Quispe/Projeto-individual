@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaTech | Tempo Real</title>
+    <title>FotoDiário | Explorar</title>
 
 
     <link rel="stylesheet" href="./../css/dashboards.css">
@@ -27,25 +27,19 @@
 
             <h1>FotoDiário</h1>
 
-            <div class="perfil"><img src="../assets/imgs/perfil-masculino2.png"></div>
+            <div class="perfil"><img src="../assets/imgs/perfil-cachorro.png"></div>
 
             <div class="hello">
                 <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
             </div>
 
             <div class="btn-nav">
-                <h3>Suas fotos</h3>
+                <h3>Explore o Mundo</h3>
             </div>
 
             <div class="btn-nav-white">
                 <a href="./dashboard.html">
-                    <h3>Gráficos</h3>
-                </a>
-            </div>
-
-            <div class="btn-nav-white">
-                <a href="./mural.html">
-                    <h3>Explore o mundo</h3>
+                    <h3>Engajamento</h3>
                 </a>
             </div>
 
@@ -58,9 +52,6 @@
 
         <div class="dash">
 
-
-            <!--<div id="alerta">
-            </div>-->
             <div class="postagem">
                 <div class="miniPerfil"><img src="../assets/imgs/pessoa3.png"></div>
                     <p>
@@ -73,40 +64,9 @@
             <div class="area-parametros-alerta">
                 <div id="container">
                 </div>
-                <!--<p class="titulo-legenda">
-                    Legenda - Parâmetros para Alertas
-                </p>
-                <div class="parametros-alerta">
-                    <div class="item-regua perigo-frio">
-                        <p>Perigo</p>
-                        <p>&lt;=5°C</p>
-                    </div>
-                    <div class="item-regua alerta-frio">
-                        <p>Alerta</p>
-                        <p>&lt;=10°C</p>
-                    </div>
-                    <div class="item-regua ideal">
-                        <p>Ideal</p>
-                        <p>20°C</p>
-                    </div>
-                    <div class="item-regua alerta-quente">
-                        <p>Alerta</p>
-                        <p>&gt;=22°C</p>
-                    </div>
-                    <div class="item-regua perigo-quente">
-                        <p>Perigo</p>
-                        <p>&gt;=23°C</p>
-                    </div>
-                </div>-->
             </div>
-
-            <!--<div class="cards" id="cardAquarios">
-
-            </div>-->
-
         </div>
     </div>
-    
 
 </body>
 
@@ -130,6 +90,9 @@
       .catch(err => {
         console.log(err);
       })
+
+      foto.value = ''
+      descricao.value = ''
   }
 
   function carregarFeed() {
@@ -150,9 +113,6 @@
                                 <button id="botao-${foto.idFoto}" onclick="curtirOuDescurtir(${foto.idFoto})"></button>
                                 <div id="likes${foto.idFoto}"></div>
                             </div>
-                            <button onclick="excluirFoto('{{idFoto}}')" class="botao-excluir">
-                                Excluir
-                            </button>
                         </div>
                         
                         <div class="comentario">
@@ -208,7 +168,7 @@
             document.getElementById(`listaComentario-${idFoto}`).innerHTML = "";
             lista.forEach(c => {
                 document.getElementById(`listaComentario-${idFoto}`).innerHTML += `
-                    <div class="perfilComentario"><img src="../assets/imgs/pessoa3.png"></div><p> ${c.nickname}: ${c.comentario}</p>
+                    <div class="perfilComentario"><img src="../assets/imgs/pessoa3.png"><p> <b>${c.nickname}:</b> ${c.comentario}</p></div>
                 `;
             });
         });

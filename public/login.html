@@ -26,9 +26,6 @@
                 <li>
                     <a href="index.html">Página Inicial</a>
                 </li>
-                <!--<li>
-                    <a href="simulador.html">Simulador</a>
-                </li>-->
                 <li>|</li>
                 <li class="agora">
                     <a href="#">Login</a>
@@ -95,7 +92,7 @@
 
         if (emailVar == "" || senhaVar == "") {
             cardErro.style.display = "block"
-            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+            mensagem_erro.innerHTML = "Preencha os campos.";
             finalizarAguardar();
             return false;
         }
@@ -142,7 +139,7 @@
 
                 resposta.text().then(texto => {
                     console.error(texto);
-                    finalizarAguardar(texto);
+                    finalizarAguardar('<b><span style="color: #871919;">Senha ou E-mail incorretos</span></b>');
                 });
             }
 

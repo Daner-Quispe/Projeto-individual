@@ -1,11 +1,6 @@
 create database projetoIndv;
 use projetoIndv;
 
-create table perfil (
-	idPerfil int primary key, 
-    avatar varchar(50)
-    );
-    
 create table usuario (
 	idUser int primary key auto_increment,
     nome  varchar(100) not null,
@@ -13,9 +8,6 @@ create table usuario (
     email varchar(100) not null unique,
     constraint chkEmail check (email like '%@%'),
 	senha varchar(50),
-    perfil_idPerfil int,
-    constraint fkUsuarioPerfil
-		foreign key(perfil_idPerfil) references perfil(idPerfil)
     );
     
 create table foto (
@@ -82,20 +74,10 @@ where f.usuario_idUser = 1;
 -- Data que teve pelo menos uma curtida(exemplo descartado)
 select distinct(concat(day(dtCurtida), '/', month(dtCurtida))) as 'Data da Curtida' from curtida;
 
--- Total de curtidas recebidas em uma data
-SELECT 
-    DATE(dtCurtida) AS dataCurtida,
-    COUNT(*) AS totalCurtidas
-FROM curtida
-WHERE foto_idFoto IN (
-    SELECT idFoto FROM foto WHERE usuario_idUser = 1
-)
-GROUP BY DATE(dtCurtida)
-ORDER BY DATE(dtCurtida);
 
--- Outra data curtidas recebidas no dia
+-- Data curtidas recebidas no dia
 select date(cur.dtCurtida) as 'Data',
-    count(*) as 'Curtidas'
+    count(cur.idCurtida) as 'Curtidas'
 from curtida cur
 join foto f on f.idFoto = cur.foto_idFoto
 where f.usuario_idUser = 1
@@ -106,11 +88,13 @@ order by date(cur.dtCurtida);
 select count(idFoto) from foto where usuario_idUser = 1;
 
 -- selecionar o dia com mais curtidas
-select date(dtCurtida) as dia, 
-count(idCurtida) as total
-from curtida
-group by date(dtCurtida)
-order by total desc;
+select date_format(cur.dtCurtida, '%d/%m') as dia, 
+count(cur.idCurtida) as total
+from curtida cur join foto f on f.idFoto = cur.foto_idFoto
+where f.usuario_idUser = 1
+group by date_format(cur.dtCurtida, '%d/%m')
+order by total desc
+limit 1;
 
 
 select * from foto;
