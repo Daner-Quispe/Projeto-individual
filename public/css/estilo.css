@@ -265,16 +265,10 @@ input {
 .perfilComentario {
   display: flex;
   align-items: center;
-  border: 1px solid #1D2916;
-  border-radius: 100%;
   width: 25px;
   height: 25px;
   margin-top: 10px;
   margin-bottom: 10px;
-}
-.perfilComentario img {
-  width: 100%;
-  height: 100%;
 }
 .perfilComentario p {
   margin: 0;

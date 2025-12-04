@@ -34,7 +34,7 @@
         <div class="header-left">
             <h1>FotoDiário</h1>
 
-            <div class="perfil"><img src="../assets/imgs/pessoa3.png"></div>
+            <div class="perfil"><img id="fotoPerfil"></div>
 
             <div class="hello">
                 <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
@@ -100,6 +100,7 @@
 
 <script>
     b_usuario.innerHTML = sessionStorage.NICKNAME_USUARIO;
+    fotoPerfil.src = `../assets/imgs/${sessionStorage.AVATAR}`;
 
     function dadosGrafico() {
         let totalLike = 0

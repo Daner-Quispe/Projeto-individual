@@ -7,7 +7,7 @@ create table usuario (
     nickname varchar(50) not null unique,
     email varchar(100) not null unique,
     constraint chkEmail check (email like '%@%'),
-	senha varchar(50),
+	senha varchar(50)
     );
     
 create table foto (
@@ -43,13 +43,12 @@ create table curtida (
 		foreign key(foto_idFoto) references foto(idFoto)
     );
 alter table curtida add constraint unqUserFoto unique(usuario_idUser, foto_idFoto);
-    
-select * from usuario;
+alter table usuario add column avatar varchar(100);
 
-select * from foto;
+
 select url, descricao, usuario_idUser from foto;
 
-select * from comentario;
+-- seleciona os comentarios de determinado perfil em ordem decrescente
 select u.nickname, c.comentario, c.dtComentario 
 from comentario c join usuario u 
 	on c.usuario_idUser = u.idUser;
@@ -58,10 +57,6 @@ FROM usuario u join  comentario c
 	ON u.idUser = c.usuario_idUser
 WHERE foto_idFoto = 1
 ORDER BY dtComentario DESC;
-
-select * from curtida;
-
-select * from perfil;
 
 -- Quantidade total de curtidas em uma foto
 select count(usuario_idUser) from curtida where foto_idFoto = 1;
@@ -93,10 +88,4 @@ count(cur.idCurtida) as total
 from curtida cur join foto f on f.idFoto = cur.foto_idFoto
 where f.usuario_idUser = 1
 group by date_format(cur.dtCurtida, '%d/%m')
-order by total desc
-limit 1;
-
-
-select * from foto;
-select * from usuario;
-select * from curtida;
+order by total desc;

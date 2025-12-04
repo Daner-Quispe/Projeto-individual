@@ -27,7 +27,7 @@
 
             <h1>FotoDiário</h1>
 
-            <div class="perfil"><img src="../assets/imgs/perfil-cachorro.png"></div>
+            <div class="perfil"><img id="fotoPerfil"></div>
 
             <div class="hello">
                 <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
@@ -53,7 +53,7 @@
         <div class="dash">
 
             <div class="postagem">
-                <div class="miniPerfil"><img src="../assets/imgs/pessoa3.png"></div>
+                <div class="miniPerfil"><img id="fotoPerfilMini"></div>
                     <p>
                         <input name="foto" id="foto" type="file"/>
                         <input name="descricao" id="descricao" placeholder="Escreva algo...">
@@ -73,6 +73,8 @@
 <script>
 
     b_usuario.innerHTML = sessionStorage.NICKNAME_USUARIO;
+    fotoPerfil.src = `../assets/imgs/${sessionStorage.AVATAR}`;
+    fotoPerfilMini.src = `../assets/imgs/${sessionStorage.AVATAR}`
 
     function enviar() {
     const formData = new FormData();
@@ -101,7 +103,7 @@
         .then(lista => {
             container.innerHTML = "";
 
-            for (let i = 0; i < lista.length; i++) {
+            for (let i = lista.length-1; i >= 0; i--) {
                 var foto = lista[i]
                 
                 container.innerHTML += `
@@ -168,7 +170,7 @@
             document.getElementById(`listaComentario-${idFoto}`).innerHTML = "";
             lista.forEach(c => {
                 document.getElementById(`listaComentario-${idFoto}`).innerHTML += `
-                    <div class="perfilComentario"><img src="../assets/imgs/pessoa3.png"><p> <b>${c.nickname}:</b> ${c.comentario}</p></div>
+                    <div class="perfilComentario"><p> <b>${c.nickname}:</b> ${c.comentario}</p></div>
                 `;
             });
         });

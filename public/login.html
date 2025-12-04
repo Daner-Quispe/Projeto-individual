@@ -125,10 +125,11 @@
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
                     sessionStorage.NICKNAME_USUARIO = json.nickname;
+                    sessionStorage.AVATAR_USUARIO = json.avatar;
                     //sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
 
                     setTimeout(function () {
-                        window.location = "./dashboard/cards.html";
+                        window.location = "./dashboard/explorar.html";
                     }, 1000); // apenas para exibir o loading
 
                 });
@@ -139,7 +140,7 @@
 
                 resposta.text().then(texto => {
                     console.error(texto);
-                    finalizarAguardar('<b><span style="color: #871919;">Senha ou E-mail incorretos</span></b>');
+                    finalizarAguardar('<b><span style="color: 871919;">Senha ou E-mail incorretos</span></b>');
                 });
             }
 
