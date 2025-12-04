@@ -77,7 +77,7 @@
           <div class="campo">
             <span>Confirmação da Senha:</span>
             <input id="confirmacao_senha_input" type="password" placeholder="******" />
-            <h5 class="validar" id="erroSenha"></h5>
+            <h5 class="validar" id="erroConfSenha"></h5>
           </div>
           <button class="botao" onclick="cadastrar()">Cadastrar</button>
         </div>
@@ -129,8 +129,14 @@
       erroEmail.innerHTML = `*E-mail inválido.*`
       validacao = false
 
-    } if ((senhaVar == '' || confirmacaoSenhaVar == '') && senhaVar != confirmacaoSenhaVar) {
+    } if (senha_input.value == '' || confirmacao_senha_input.value == '') {
       erroSenha.innerHTML = `*Senhas devem ser iguas*`
+      erroConfSenha.innerHTML = `*Senhas devem ser iguas*`
+      validacao = false
+    }
+    if (senhaVar != confirmacaoSenhaVar) {
+      erroSenha.innerHTML = `*Senhas devem ser iguas*`
+      erroConfSenha.innerHTML = `*Senhas devem ser iguas*`
       validacao = false
     }
 
